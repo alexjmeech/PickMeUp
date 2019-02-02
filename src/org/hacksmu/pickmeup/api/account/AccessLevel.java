@@ -1,4 +1,4 @@
-package org.hacksmu.pickmeup.api.webserver;
+package org.hacksmu.pickmeup.api.account;
 
 public enum AccessLevel
 {

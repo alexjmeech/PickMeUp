@@ -1,6 +1,6 @@
 package org.hacksmu.pickmeup.api.account.api;
 
-import org.hacksmu.pickmeup.api.webserver.AccessLevel;
+import org.hacksmu.pickmeup.api.account.AccessLevel;
 
 public interface IUserSession
 {

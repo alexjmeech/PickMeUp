@@ -2,6 +2,8 @@ package org.hacksmu.pickmeup.api.webserver;
 
 import java.util.concurrent.TimeUnit;
 
+import org.hacksmu.pickmeup.api.account.AccessLevel;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 

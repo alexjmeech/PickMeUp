@@ -3,6 +3,7 @@ package org.hacksmu.pickmeup.api.webserver;
 import static spark.Spark.halt;
 
 import org.hacksmu.pickmeup.api.PickMeUpAuthorizer;
+import org.hacksmu.pickmeup.api.account.AccessLevel;
 
 import com.google.gson.Gson;
 

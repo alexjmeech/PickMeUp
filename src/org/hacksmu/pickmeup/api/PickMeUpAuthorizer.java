@@ -1,8 +1,8 @@
 package org.hacksmu.pickmeup.api;
 
+import org.hacksmu.pickmeup.api.account.AccessLevel;
 import org.hacksmu.pickmeup.api.account.api.IAccountManager;
 import org.hacksmu.pickmeup.api.account.api.IUserSession;
-import org.hacksmu.pickmeup.api.webserver.AccessLevel;
 
 import spark.Filter;
 import spark.Request;
