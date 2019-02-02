@@ -7,7 +7,8 @@ public class UserAccount implements IUserAccount
     private String email;
     private String passwordHash;
 
-    public UserAccount(String email, String passwordHash) {
+    public UserAccount(int id, String email, String passwordHash) {
+        this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
     }

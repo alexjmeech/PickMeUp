@@ -1,4 +1,6 @@
 package org.hacksmu.pickmeup.api.account.impl;
+import java.util.UUID;
+
 import org.hacksmu.pickmeup.api.account.api.IUserSession;
 import org.hacksmu.pickmeup.api.webserver.AccessLevel;
 
@@ -7,9 +9,9 @@ public class UserSession implements IUserSession {
     private String token;
     private AccessLevel accesslevel;
 
-    public UserSession(int id, String token, AccessLevel accesslevel) {
+    public UserSession(int id, AccessLevel accesslevel) {
         this.id = id;
-        this.token = token;
+        this.token = UUID.randomUUID().toString();
         this.accesslevel = accesslevel;
     }
 

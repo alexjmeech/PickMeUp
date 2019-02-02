@@ -15,26 +15,18 @@ public class AccountManager implements IAccountManager {
         IUserSession session = new UserSession(usraccount.getID(), AccessLevel.NONE);
         return session;
     }
-    /**
-	 * Manually creates a {@link IUserSession} attached to a specific {@link IUserAccount}
-	 * @param account the {@link IUserAccount} being signed into
-	 * @return {@link IUserSession} The session attached to the specified user account
-	 */
     @Override
     public IUserSession login(IUserAccount account) {
         IUserAccount usraccount = repository.selectAccount(account.getEmail());
         IUserSession session = new UserSession(usraccount.getID(), AccessLevel.NONE);
         return session;
     }
-    /**
-	 * Creates a {@link IUserAccount} with a user-input email and password
-	 * @param email The email address provided by the user
-	 * @param password The password provided by the user
-	 * @return {@link IUserAccount} The account representing all the data attached to the user
-	 */
-    @Override
+    @Override                               //hash the password, return that
     public IUserAccount create(String email, String password) {
-
+        int id = repository.createAccount(email, password);//psswrd not hashed
+        IUserAccount usraccount = new UserAccount(id, email, password);
+        return usraccount;//this usraccount that is returned does not
+                          //contain hashed password.
     }
     /**
 	 * Locates a {@link IUserSession} by a user-provided session token
