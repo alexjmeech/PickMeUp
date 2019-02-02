@@ -7,6 +7,12 @@ public class UserSession implements IUserSession {
     private String token;
     private AccessLevel accesslevel;
 
+    public UserSession(int id, String token, AccessLevel accesslevel) {
+        this.id = id;
+        this.token = token;
+        this.accesslevel = accesslevel;
+    }
+
     @Override
     public int getAccountID() {
         return id;
