@@ -1,4 +1,5 @@
 package org.hacksmu.pickmeup.api.account.impl;
+import org.hacksmu.pickmeup.api.account.AccessLevel;
 import org.hacksmu.pickmeup.api.account.api.IUserAccount;
 
 public class UserAccount implements IUserAccount
@@ -6,11 +7,13 @@ public class UserAccount implements IUserAccount
     private int id;
     private String email;
     private String passwordHash;
+    private AccessLevel accessLevel;
 
-    public UserAccount(int id, String email, String passwordHash) {
+    public UserAccount(int id, String email, String passwordHash, AccessLevel accessLevel) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.accessLevel = accessLevel;
     }
 
     @Override
@@ -26,6 +29,12 @@ public class UserAccount implements IUserAccount
     @Override
     public String getPasswordHash() {
         return passwordHash;
+    }
+    
+    @Override
+    public AccessLevel getAccessLevel()
+    {
+    	return accessLevel;
     }
 
     @Override

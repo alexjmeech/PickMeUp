@@ -1,8 +1,8 @@
 package org.hacksmu.pickmeup.api.account.impl;
 import java.util.UUID;
 
+import org.hacksmu.pickmeup.api.account.AccessLevel;
 import org.hacksmu.pickmeup.api.account.api.IUserSession;
-import org.hacksmu.pickmeup.api.webserver.AccessLevel;
 
 public class UserSession implements IUserSession {
     private int id;

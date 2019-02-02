@@ -1,5 +1,7 @@
 package org.hacksmu.pickmeup.api.account.api;
 
+import org.hacksmu.pickmeup.api.account.AccessLevel;
+
 /**
  * Interface for user accounts
  */
@@ -22,6 +24,8 @@ public interface IUserAccount
 	 * @return String The hashed password for this user
 	 */
 	String getPasswordHash();
+	
+	AccessLevel getAccessLevel();
 	
 	/**
 	 * Setter method for this user's registered email address
