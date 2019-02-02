@@ -8,12 +8,16 @@ import static spark.Spark.notFound;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hacksmu.pickmeup.api.NumberUtil;
 import org.hacksmu.pickmeup.api.PickMeUpAuthorizer;
 
+import spark.ModelAndView;
 import spark.Spark;
+import spark.template.velocity.VelocityTemplateEngine;
 
 public class Main
 {
@@ -70,7 +74,15 @@ public class Main
 			return "{\"statusCode\":\"404\",\"error\":\"Not Found\"}";
 		});
 		
-		before(PickMeUpAuthorizer.getInitialFilter());
+		//before(PickMeUpAuthorizer.getInitialFilter());
 		get("/", (request, response) -> "PickMeUp Web System");
+		get("/testvelocity", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<>();
+			model.put("name", "Alex");
+		    return new VelocityTemplateEngine().render(
+		        new ModelAndView(model, "testvelocity.vm")
+		    );
+		});
 	}
 }

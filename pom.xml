@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>PickMeUp</groupId>
+  <groupId>org.hacksmu.pickmeup</groupId>
   <artifactId>PickMeUp</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
@@ -9,10 +9,14 @@
 	<finalName>${project.name}</finalName>
     <resources>
       <resource>
-        <directory>src</directory>
+        <directory>src/main/java</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <plugins>
@@ -93,6 +97,11 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <version>1.7.7</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sparkjava</groupId>
+        <artifactId>spark-template-velocity</artifactId>
+        <version>2.7.1</version>
     </dependency>
   </dependencies>
 </project>

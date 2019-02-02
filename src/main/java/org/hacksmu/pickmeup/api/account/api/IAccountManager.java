@@ -57,5 +57,5 @@ public interface IAccountManager
 	 * @param password The old password of the {@link IUserAccount} to validate the email change
 	 * @return boolean <b>true</b> if the password was successfully changed, <b>false</b> if the provided password was incorrect or the change otherwise failed
 	 */
-	boolean changePassword(String email, String newPassword, String password);
+	boolean changePassword(IUserAccount account, String newPassword, String password);
 }

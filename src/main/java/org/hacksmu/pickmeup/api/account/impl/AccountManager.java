@@ -69,12 +69,45 @@ public class AccountManager implements IAccountManager {
     }
 	@Override
 	public boolean changeEmail(IUserAccount account, String newEmail, String password) {
-		// TODO Auto-generated method stub
+		IUserAccount usraccount = repository.selectAccount(account.getEmail());
+		try
+    	{
+			if (PasswordHash.safeValidatePassword(password, usraccount.getPasswordHash()))
+			{
+				usraccount.setEmail(newEmail);
+				repository.updateAccountEmail(usraccount.getID(), newEmail);
+				return true;
+			}
+    	}
+    	catch (Exception ex)
+    	{
+    		ex.printStackTrace();
+    		return false;
+    	}
 		return false;
 	}
+	/**
+	 * Changes the password associated with a {@link IUserAccount}
+	 * @param account The {@link IUserAccount} having their password changed
+	 * @param newPassword The password being assigned to the {@link IUserAccount}
+	 * @param password The old password of the {@link IUserAccount} to validate the email change
+	 * @return boolean <b>true</b> if the password was successfully changed, <b>false</b> if the provided password was incorrect or the change otherwise failed
+	 */
 	@Override
-	public boolean changePassword(String email, String newPassword, String password) {
-		// TODO Auto-generated method stub
+	public boolean changePassword(IUserAccount account, String newPassword, String password) {
+		IUserAccount usraccount = repository.selectAccount(account.getEmail());
+		
+		try {
+			if (PasswordHash.safeValidatePassword(password, usraccount.getPasswordHash()))
+			{
+				usraccount.setPasswordHash(newPassword);
+				return true;
+			}
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 		return false;
 	}
 }
