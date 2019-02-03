@@ -1,12 +1,12 @@
 package org.hacksmu.pickmeup;
 
-import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.internalServerError;
 import static spark.Spark.notFound;
 import static spark.Spark.post;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.hacksmu.pickmeup.api.NumberUtil;
-import org.hacksmu.pickmeup.api.PickMeUpAuthorizer;
+import org.hacksmu.pickmeup.postmates.PostmateQuote;
+import org.hacksmu.pickmeup.postmates.PostmatesWebCall;
 import org.hacksmu.pickmeup.route.account.CreateAccount;
 
 import spark.ModelAndView;
@@ -94,5 +95,19 @@ public class Main
 		    );
 		});
 		post("/login", new CreateAccount());
+		
+		try {
+			Map<String, String> params = new HashMap<>();
+			params.put("pickup_address", "20 McAllister St, San Francisco, CA");
+			params.put("pickup_phone_number", "415-555-8484");
+			params.put("dropoff_address", "101 Market St, San Francisco, CA");
+			params.put("dropoff_phone_number", "415-555-8484");
+			PostmateQuote quote = new PostmatesWebCall<PostmateQuote>("c41bb275-4ecc-40dd-ac09-0c29f99a1d00", "POST", "cus_M4M4bpoORyPoGk", "customers/:customer_id/delivery_quotes").call(PostmateQuote.class, params);
+			System.out.println("NULL: " + quote == null);
+			System.out.println("FEE: " + quote.fee);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
