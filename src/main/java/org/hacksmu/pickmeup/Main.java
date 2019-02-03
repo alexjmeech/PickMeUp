@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.internalServerError;
 import static spark.Spark.notFound;
 import static spark.Spark.post;
+import static spark.Spark.before;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -92,23 +93,13 @@ public class Main
 
 		Spark.staticFileLocation("pub");
 
-		//before(PickMeUpAuthorizer.getInitialFilter());
-		get("/", (request, response) -> "PickMeUp Web System");
+		before(PickMeUpAuthorizer.getInitialFilter());
 
-		get("/pickmeup", (request, response) ->
+		get("/", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<>();
 			return new VelocityTemplateEngine().render(
 					new ModelAndView(model, "Homepage.vm")
-					);
-		});
-
-		get("/testvelocity", (request, response) ->
-		{
-			Map<String, Object> model = new HashMap<>();
-			model.put("name", "Alex");
-			return new VelocityTemplateEngine().render(
-					new ModelAndView(model, "testvelocity.vm")
 					);
 		});
 		get("/login", (request, response) ->
