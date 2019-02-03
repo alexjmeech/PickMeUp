@@ -20,7 +20,7 @@ body
   text-align:center;
   
 }
-button[type=button]
+button[type=submit]
 {
   background-color:#393f4d; /* Charcol */
   border: none;
@@ -33,11 +33,11 @@ button[type=button]
   font-size: 16px;
   cursor:pointer;
 }
-button[type=button]:hover 
+button[type=submit]:hover 
 {
   filter: brightness(85%);
 }
-button[type=button]:active
+button[type=submit]:active
 {
   filter: brightness(85%);
   box-shadow: 0 5px #666;

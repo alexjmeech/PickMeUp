@@ -2,7 +2,7 @@
   <body>
     <header id="header1">Add a Delivery Address</header>
     <div id="border1"></div>
-    <form id="Form1">
+    <form id="Form1" action="/login" method="POST">
       
       <br>
       <input id="input1" type="text" name="Address 1" placeholder="Address 1">
@@ -69,8 +69,8 @@
     </form>
 <br>
 <div>
-  <button id="btn1" type="button">Save</button>
-  <button id="btn2" type="button">Cancel</button>
+  <button id="btn1" type="submit">Save</button>
+  <button id="btn2" type="submit">Cancel</button>
 </div>
   </body>
 </html>
