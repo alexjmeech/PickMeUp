@@ -11,7 +11,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public abstract class BasicRoute<T> implements Route
+public abstract class BasicRoute implements Route
 {
 	private static final Gson GSON = new Gson();
 	private final AccessLevel _requiredLevel;
@@ -32,13 +32,13 @@ public abstract class BasicRoute<T> implements Route
 	public final String handle(Request request, Response response)
 	{
 		response.type("application/json");
-		if (!PickMeUpAuthorizer.authorized(request, _requiredLevel))
-		{
-			halt(401,
-					"{\"statusCode\":\"401\",\"error\":\"Permission Denied\",\"message\":\"Invalid"
-							+ " Authorization for that request\"}");
-			return null;
-		}
+//		if (!PickMeUpAuthorizer.authorized(request, _requiredLevel))
+//		{
+//			halt(401,
+//					"{\"statusCode\":\"401\",\"error\":\"Permission Denied\",\"message\":\"Invalid"
+//							+ " Authorization for that request\"}");
+//			return null;
+//		}
 		
 		return handleRequest(request, response);
 	}

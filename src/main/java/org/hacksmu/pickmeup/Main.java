@@ -4,6 +4,7 @@ import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.internalServerError;
 import static spark.Spark.notFound;
+import static spark.Spark.post;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import org.hacksmu.pickmeup.api.NumberUtil;
 import org.hacksmu.pickmeup.api.PickMeUpAuthorizer;
+import org.hacksmu.pickmeup.route.account.CreateAccount;
 
 import spark.ModelAndView;
 import spark.Spark;
@@ -84,5 +86,13 @@ public class Main
 		        new ModelAndView(model, "testvelocity.vm")
 		    );
 		});
+		get("/login", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<>();
+		    return new VelocityTemplateEngine().render(
+		        new ModelAndView(model, "loginpage.vm")
+		    );
+		});
+		post("/login", new CreateAccount());
 	}
 }

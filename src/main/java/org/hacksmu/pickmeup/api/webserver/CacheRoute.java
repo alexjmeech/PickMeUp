@@ -7,7 +7,7 @@ import org.hacksmu.pickmeup.api.account.AccessLevel;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-public abstract class CacheRoute<T> extends BasicRoute<T>
+public abstract class CacheRoute<T> extends BasicRoute
 {
 	private final Cache<String, T> _cache;
 
