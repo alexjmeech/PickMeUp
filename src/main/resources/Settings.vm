@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <header id="header1">Settings</header>
+    <div id="border1"></div>
+    <table id="table1" align="center">
+      <tr>
+      <td><a href="https://codepen.io/kibitz117/pen/bzWxoE" class="nav-link">Payment</a></td>
+      </tr>
+      <tr>
+        <td> <a href="https://codepen.io/kibitz117/pen/XORqWg" class="nav-link">Addresses</a></td>
+      </tr>
+      <tr>
+        <td><a href="https://codepen.io/kibitz117/pen/mvmjgQ" class="nav-link">Orders</a></td>
+      </tr>
+      <tr>
+        <td><a href=""class="nav-link">Log Out</a></td>
+      <br></br>
+        
+      
+    </table>
+  </body>
+</html>
