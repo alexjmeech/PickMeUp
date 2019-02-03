@@ -1,128 +1,150 @@
 package org.hacksmu.pickmeup.api.account.impl;
 
-import java.sql.SQLException;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hacksmu.pickmeup.api.account.AccessLevel;
-import org.hacksmu.pickmeup.api.account.Enclosure;
 import org.hacksmu.pickmeup.api.account.api.IAccountRepository;
 import org.hacksmu.pickmeup.api.account.api.IUserAccount;
-import org.hacksmu.pickmeup.api.database.BasicRepository;
-import org.hacksmu.pickmeup.api.database.DBPool;
 
-public class AccountRepository extends BasicRepository implements IAccountRepository
+public class AccountRepository implements IAccountRepository
 {
-	private static final String CREATE_TABLE = "CREATE TABLE accounts (id INT AUTO_INCREMENT, email VARCHAR(50) NOT NULL, password_hash VARCHAR(200) NOT NULL, access_level VARCHAR(20) NOT NULL, PRIMARY KEY (id), UNIQUE INDEX email_index (email), INDEX level_index (access_level));";
-	private static final String CREATE_ACCOUNT = "INSERT INTO accounts (email, passwordHash) VALUES (?, ?, ?);";
-	private static final String SELECT_ACCOUNT_ID = "SELECT * FROM accounts WHERE id=?;";
-	private static final String SELECT_ACCOUNT_EMAIL = "SELECT * FROM accounts WHERE email=?;";
-	private static final String UPDATE_ACCOUNT_EMAIL = "UPDATE accounts SET email=? WHERE id=?;";
-	private static final String UPDATE_ACCOUNT_PASSWORD = "UPDATE accounts SET passwordHash=? WHERE id=?;";
-	
-	public AccountRepository()
+	private static class UserRow
 	{
-		super(DBPool.ACCOUNT_DATABASE);
+		private static final AtomicInteger AUTO_INCREMENT_ID = new AtomicInteger(1);
+		
+		private final int _id;
+		private String _email;
+		private String _passwordHash;
+		private AccessLevel _accessLevel;
+		private final Object _lock = new Object();
+		
+		UserRow(String email, String passwordHash, AccessLevel accessLevel)
+		{
+			_id = AUTO_INCREMENT_ID.getAndIncrement();
+			
+			synchronized (_lock)
+			{
+				_email = email;
+				_passwordHash = passwordHash;
+				_accessLevel = accessLevel;
+			}
+		}
+		
+		public int getId()
+		{
+			return _id;
+		}
+		
+		public String getEmail()
+		{
+			synchronized (_lock)
+			{
+				return _email;
+			}
+		}
+		
+		public void setEmail(String email)
+		{
+			synchronized (_lock)
+			{
+				_email = email;
+			}
+		}
+		
+		public String getPasswordHash()
+		{
+			synchronized (_lock)
+			{
+				return _passwordHash;
+			}
+		}
+		
+		public void setPasswordHash(String passwordHash)
+		{
+			synchronized (_lock)
+			{
+				_passwordHash = passwordHash;
+			}
+		}
+		
+		public AccessLevel getAccessLevel()
+		{
+			synchronized (_lock)
+			{
+				return _accessLevel;
+			}
+		}
+		
+		public void setAccessLevel(AccessLevel accessLevel)
+		{
+			synchronized (_lock)
+			{
+				_accessLevel = accessLevel;
+			}
+		}
 	}
+	
+	private final Map<Integer, UserRow> _accounts = new ConcurrentHashMap<>();
 	
 	@Override
 	public int createAccount(String email, String passwordHash)
 	{
-		Enclosure<Integer> accountId = new Enclosure<>(-1);
-		
-		try
+		IUserAccount existing = selectAccount(email);
+		if (existing != null)
 		{
-			executeInsert(CREATE_ACCOUNT, result ->
-			{
-				if (result.next())
-				{
-					accountId.setEnclosed(result.getInt(1));
-				}
-			}, email, passwordHash, AccessLevel.LOGGED_IN.name());
+			return existing.getID();
 		}
-		catch (SQLException ex)
-		{
-			ex.printStackTrace();
-		}
+		UserRow row = new UserRow(email, passwordHash, AccessLevel.LOGGED_IN);
+		_accounts.put(row.getId(), row);
 		
-		return accountId.getEnclosed();
+		return row.getId();
 	}
 
 	@Override
 	public IUserAccount selectAccount(int id)
 	{
-		Enclosure<IUserAccount> account = new Enclosure<>();
-		
-		try
+		UserRow row = _accounts.get(id);
+		if (row != null)
 		{
-			executeInsert(SELECT_ACCOUNT_ID, result ->
-			{
-				if (result.next())
-				{
-					int accountId = result.getInt(1);
-					String emailAddress = result.getString(2);
-					String passwordHash = result.getString(3);
-					AccessLevel accessLevel = AccessLevel.valueOf(result.getString(4));
-					account.setEnclosed(new UserAccount(accountId, emailAddress, passwordHash, accessLevel));
-				}
-			}, id);
-		}
-		catch (SQLException ex)
-		{
-			ex.printStackTrace();
+			return new UserAccount(row.getId(), row.getEmail(), row.getPasswordHash(), row.getAccessLevel());
 		}
 		
-		return account.getEnclosed();
+		return null;
 	}
 
 	@Override
 	public IUserAccount selectAccount(String email)
 	{
-		Enclosure<IUserAccount> account = new Enclosure<>();
-
-		try
+		Optional<UserRow> row = _accounts.entrySet().stream().filter(e -> e.getValue().getEmail().equalsIgnoreCase(email)).map(Entry::getValue).findAny();
+		if (row.isPresent())
 		{
-			executeInsert(SELECT_ACCOUNT_EMAIL, result ->
-			{
-				if (result.next())
-				{
-					int accountId = result.getInt(1);
-					String emailAddress = result.getString(2);
-					String passwordHash = result.getString(3);
-					AccessLevel accessLevel = AccessLevel.valueOf(result.getString(4));
-					account.setEnclosed(new UserAccount(accountId, emailAddress, passwordHash, accessLevel));
-				}
-			}, email);
+			return new UserAccount(row.get().getId(), row.get().getEmail(), row.get().getPasswordHash(), row.get().getAccessLevel());
 		}
-		catch (SQLException ex)
-		{
-			ex.printStackTrace();
-		}
-
-		return account.getEnclosed();
+		
+		return null;
 	}
 
 	@Override
 	public void updateAccountEmail(int id, String newEmail)
 	{
-		try
+		UserRow row = _accounts.get(id);
+		if (row != null)
 		{
-			executeUpdate(UPDATE_ACCOUNT_EMAIL, newEmail, id);
-		}
-		catch (SQLException ex)
-		{
-			ex.printStackTrace();
+			row.setEmail(newEmail);
 		}
 	}
 
 	@Override
-	public void updateAccountPassword(int id, String newPassword)
+	public void updateAccountPassword(int id, String newPasswordHash)
 	{
-		try
+		UserRow row = _accounts.get(id);
+		if (row != null)
 		{
-			executeUpdate(UPDATE_ACCOUNT_EMAIL, newPassword, id);
-		}
-		catch (SQLException ex)
-		{
-			ex.printStackTrace();
+			row.setPasswordHash(newPasswordHash);
 		}
 	}
 }

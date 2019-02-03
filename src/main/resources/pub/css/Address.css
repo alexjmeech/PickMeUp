@@ -1,0 +1,76 @@
+body
+{
+  color:#d4d4dc;
+  font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    background-color:#1d1e22;
+  text-align:center;
+  
+}
+
+
+
+#border1
+{
+   border-style:ridge;
+  border-color:#feda6a;
+}
+#header1{
+  padding:30px;
+  font-size: 40px;
+  text-align:center;
+  
+}
+button[type=submit]
+{
+  background-color:#393f4d; /* Charcol */
+  border: none;
+  color:white;
+  border-radius:4px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor:pointer;
+}
+button[type=submit]:hover 
+{
+  filter: brightness(85%);
+}
+button[type=submit]:active
+{
+  filter: brightness(85%);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+input[type=text] {
+  padding: 0;
+  height: 30px;
+  position: relative;
+  left: 0;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius:4px;
+  border-color: rgba(0, 0, 0, .15);
+  background-color: white;
+  font-size: 16px;
+}
+#input3
+{
+  padding: 0;
+  position: relative;
+  left: 0;
+  border-radius:4px;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-color: rgba(0, 0, 0, .15);
+  background-color: white;
+  font-size: 16px;
+  
+}
+.button:hover {
+  background-color: #3e8e41;
+}
+/* #Form1{
+  text-indent:500px;
+} */

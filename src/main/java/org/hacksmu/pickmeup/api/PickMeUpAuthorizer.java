@@ -1,8 +1,8 @@
 package org.hacksmu.pickmeup.api;
 
 import org.hacksmu.pickmeup.api.account.AccessLevel;
-import org.hacksmu.pickmeup.api.account.api.IAccountManager;
 import org.hacksmu.pickmeup.api.account.api.IUserSession;
+import org.hacksmu.pickmeup.api.account.impl.AccountManager;
 
 import spark.Filter;
 import spark.Request;
@@ -10,13 +10,6 @@ import spark.Session;
 
 public class PickMeUpAuthorizer
 {
-	private static final IAccountManager MANAGER;
-	
-	static
-	{
-		MANAGER = null;
-	}
-	
 	public static Filter getInitialFilter()
 	{
 		return (request, response) ->
@@ -28,7 +21,7 @@ public class PickMeUpAuthorizer
 			
 			String token = request.session(false).attribute("sessionToken");
 			
-			if (token != null && MANAGER.getSession(token) == null)
+			if (token != null && AccountManager.INSTANCE.getSession(token) == null)
 			{
 				request.session(false).removeAttribute("sessionToken");
 			}
@@ -48,7 +41,7 @@ public class PickMeUpAuthorizer
 			return level == AccessLevel.NONE;
 		}
 		
-		IUserSession userSession = MANAGER.getSession(request.session(false).attribute("sessionToken"));
+		IUserSession userSession = AccountManager.INSTANCE.getSession(request.session(false).attribute("sessionToken"));
 		if (userSession == null)
 		{
 			return level == AccessLevel.NONE;

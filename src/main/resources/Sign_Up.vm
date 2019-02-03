@@ -1,44 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel = "stylesheet" type = "text/css" href = "Sign_In.css">
-<style>
-	body {
- 	border-radius: 5px;
-    background-color: #1d1e22;
-    padding: 20px;
-    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif; 
-    font-color: #d4d4dc;
-	color:#d4d4dc;
-	text-align:center;
-}
-
-input[type=text], select {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-
-input[type=submit] {
-  width: 50%;
-  background-color: #393f4d;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #feda6a;
-}
-</style>
+	<link rel = "stylesheet" type = "text/css" href = "css/Sign_In.css">
+	<link rel = "stylesheet" type = "text/css" href = "css/Sign_Up.css">
 </head>
 
 <body>
@@ -47,14 +11,14 @@ input[type=submit]:hover {
 
 		
 		<!-- This is the Sign up form -->
-				<form>
+				<form action="/signup" method="POST">
 						<p style="color:#d4d4dc; font-size: 20px;" >Create An Account </p>
 						Email:<br>
 						<input type = 'text' name = 'email'><br>
 						Password:<br>
-						<input type = 'text' name = 'pass'><br>
+						<input type = 'password' name = 'password'><br>
 						Confirm:<br>
-						<input type = 'text' name = 'pass'><br>
+						<input type = 'password' name = 'password_confirm'><br>
 						Phone:<br>
 						<input type = 'text' name = 'phone'><br>
 						<input type = 'submit' value = 'Sign Up'>

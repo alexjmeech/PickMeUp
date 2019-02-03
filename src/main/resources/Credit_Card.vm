@@ -1,15 +1,34 @@
 <html>
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "css/Credit_Card.css">
+</head>
   <body>
     <header id="header1">Add Payment</header>
     <div id="border1"></div>
     <br>
-    <form id="Form1" action="/login" method="POST">
-     <input id="input1" type="text" name="Credit Card" placeholder="Credit Card Number">
+    <form id="Form1" action="/setcard" method="POST">
+     #if($card)
+     <input id="input1" type="text" name="cardnumber" placeholder="Credit Card Number" value=$card.getCardNumber()>
+     #else
+     <input id="input1" type="text" name="cardnumber" placeholder="Credit Card Number">
+     #end
     <br></br>
-    <input id="input2" type="text" name="Date" placeholder="MM/YY">
-    <input id="input3" type="text" name="Code" placeholder="CCV">
+    #if($card)
+    <input id="input2" type="text" name="expiration" placeholder="MM/YY" value=$card.getExpiration()>
+    #else
+    <input id="input2" type="text" name="expiration" placeholder="MM/YY">
+    #end
+    #if($card)
+    <input id="input3" type="text" name="cvv" placeholder="CCV" value=$card.getCVV()>
+    #else
+    <input id="input3" type="text" name="cvv" placeholder="CCV">
+    #end
   <br></br>
-<input id="input1" type="text" name="Zip" placeholder="Zipcode">
+  #if($card)
+	<input id="input1" type="text" name="zip" placeholder="Zipcode" value=$card.getZipCode()>
+	#else
+	<input id="input1" type="text" name="zip" placeholder="Zipcode">
+	#end
 <br></br>
 <button id="btn1" type="submit">Save</button>
 </form>

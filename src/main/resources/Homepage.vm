@@ -1,0 +1,15 @@
+<html>
+<head>
+        <link rel="stylesheet" type="text/css" href="css/Homepage.css"/>
+</head>
+  <body>
+    <header  id="header1">PickMeUp</header>
+    <div id="border1"></div>
+    <br></br>
+  <button id="btn1" type="button" onclick="location.href='/login'">Sign In</button>
+  <br></br>
+  <button id="btn1" type="button" onclick="location.href='/signup'">Register</button>
+<br></br>
+
+  </body>
+</html>

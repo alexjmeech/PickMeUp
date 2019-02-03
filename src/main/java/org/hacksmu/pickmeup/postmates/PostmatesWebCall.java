@@ -74,6 +74,21 @@ public class PostmatesWebCall<T>
 			
 			return GSON.fromJson(content.toString(), clazz);
 		}
+		else
+		{
+			System.out.println(status);
+			BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			StringBuffer content = new StringBuffer();
+			String inputLine;
+			while ((inputLine = in.readLine()) != null)
+			{
+				content.append(inputLine);
+			}
+			in.close();
+			response.close();
+			client.close();
+			System.out.println(content.toString());
+		}
 		
 		response.close();
 		client.close();

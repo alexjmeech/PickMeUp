@@ -16,8 +16,15 @@ public class BodyParser
 		{
 			String[] keyValue = element.split(Pattern.quote("="));
 			String key = keyValue[0];
-			String value = keyValue[1];
-			bodyMap.put(key, value);
+			if (keyValue.length >= 2)
+			{
+				String value = keyValue[1];
+				bodyMap.put(key, value);
+			}
+			else
+			{
+				bodyMap.put(key, "");
+			}
 		}
 		
 		return ImmutableMap.copyOf(bodyMap);

@@ -1,19 +1,22 @@
 <html>
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "css/Settings.css">
+</head>
   <body>
     <header id="header1">Settings</header>
     <div id="border1"></div>
     <table id="table1" align="center">
       <tr>
-      <td><a href="Credit_Card.vm" class="nav-link">Payment</a></td>
+      <td><a href="/payment" class="nav-link">Payment</a></td>
       </tr>
       <tr>
-        <td> <a href="https://codepen.io/kibitz117/pen/XORqWg" class="nav-link">Addresses</a></td>
+        <td> <a href="/address" class="nav-link">Address</a></td>
       </tr>
       <tr>
-        <td><a href="https://codepen.io/kibitz117/pen/mvmjgQ" class="nav-link">Orders</a></td>
+        <td><a href="/order" class="nav-link">Order</a></td>
       </tr>
       <tr>
-        <td><a href=""class="nav-link">Log Out</a></td>
+        <td><a href="/logout" class="nav-link">Log Out</a></td>
       <br></br>
         
       

@@ -1,0 +1,68 @@
+<html id="page">
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "css/Address.css">
+</head>
+  <body>
+    <header id="header1">Set Delivery Address</header>
+    <div id="border1"></div>
+    <form id="Form1" action="/setaddress" method="POST">
+      
+      <br>
+      #if($address)
+      <input id="input0" type="text" name="address_1" placeholder="Address 1" value="$address.getAddress1()">
+      #else
+      <input id="input0" type="text" name="address_1" placeholder="Address 1">
+      #end
+      <br></br>
+      #if($address)
+      <input id="input1" type="text" name="address_2" placeholder="Address 2" value="$address.getAddress2()">
+      #else
+      <input id="input1" type="text" name="address_2" placeholder="Address 2">
+      #end
+    <br></br>
+      #if($address)
+      <input id="input2" type="text" name="city" placeholder="City" value="$address.getCity()">
+      #else
+      <input id="input2" type="text" name="city" placeholder="City">
+      #end
+      <br></br>
+      State
+	<select id="input3" name="state">
+	#foreach($mapEntry in $stateMapping.entrySet())
+		#if($address)
+			#if($address.getState().equals($mapEntry.getKey()))
+				<option value="$mapEntry.getKey()" selected>$mapEntry.getValue()</option>
+			#else
+				<option value="$mapEntry.getKey()">$mapEntry.getValue()</option>
+			#end
+		#else
+			<option value="$mapEntry.getKey()">$mapEntry.getValue()</option>
+		#end
+	#end
+</select>
+      <br></br>
+      
+      #if($address)
+      <input id="input4" type="text" name="zip" placeholder="Zip" value="$address.getZipCode()">
+      #else
+      <input id="input4" type="text" name="zip" placeholder="Zip">
+      #end
+  <br></br>
+      #if($address)
+      <input id="input5" type="text" name="first_name" placeholder="First Name" value="$address.getFirstName()">
+      #else
+      <input id="input5" type="text" name="first_name" placeholder="First Name">
+      #end
+#if($address)
+<input id="input6" type="text" name="last_name" placeholder="Last Name" value="$address.getLastName()">
+#else
+<input id="input6" type="text" name="last_name" placeholder="Last Name">
+#end
+<br>
+<div>
+  <button id="btn1" type="submit">Save</button>
+  <button id="btn2" type="submit">Cancel</button>
+</div>
+    </form>
+  </body>
+</html>

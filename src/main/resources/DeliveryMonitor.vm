@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel = "stylesheet" type = "text/css" href = "css/DeliveryMonitor.css">
+</head>
+
+<body>
+
+		 <p align = 'center' style="font-size: 40px;"> Monitoring Order Status </p> 
+        
+        <div id = "border"></div><br>
+		
+		        <iframe src="$link"> </iframe>
+
+</body>
+</html>

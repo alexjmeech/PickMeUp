@@ -1,10 +1,13 @@
 <html>
+<head>
+<link rel = "stylesheet" type = "text/css" href = "css/Signed_In_Home.css">
+</head>
   <body>
     <header  id="header1">PickMeUp</header>
     <div id="border1"></div>
     <br></br>
-  <button id="btn1" type="button">Order</button>
-  <button id="btn1" type="button" onclick="location.href='Settings.vm'">Settings</button>
+  <button id="btn1" type="button" onclick="location.href='/order'">Order</button>
+  <button id="btn1" type="button" onclick="location.href='/settings'">Settings</button>
   <br></br>
 
   </body>

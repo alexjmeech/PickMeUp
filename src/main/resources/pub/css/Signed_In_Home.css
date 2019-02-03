@@ -1,0 +1,49 @@
+body
+{
+  color:#d4d4dc;
+  font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+  background-color:#1d1e22;
+  text-align:center;
+  
+}
+#header1
+{
+  padding:30px;
+  font-size: 40px;
+  text-align:center;
+  
+}
+#header1{
+  padding:30px;
+  font-size: 40px;
+  text-align:center;
+  
+}
+#border1
+{
+   border-style:ridge;
+  border-color:#feda6a;
+}
+button[type=button]
+{
+  background-color:#393f4d; /* Charcol */
+  border: none;
+  color:white;
+  border-radius:4px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor:pointer;
+}
+button[type=button]:hover 
+{
+  filter: brightness(85%);
+}
+button[type=button]:active
+{
+  filter: brightness(85%);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

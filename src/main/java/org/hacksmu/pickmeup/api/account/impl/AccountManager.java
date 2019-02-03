@@ -11,17 +11,27 @@ import org.hacksmu.pickmeup.api.account.api.PasswordHash;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-public class AccountManager implements IAccountManager {
+import spark.Request;
+
+public class AccountManager implements IAccountManager
+{	
+	public static final AccountManager INSTANCE = new AccountManager();
+	
     //private data members
-    private IAccountRepository repository;
-    private final Cache<String, UserSession> tokens = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.HOURS).build();
+    private final IAccountRepository repository = new AccountRepository();
+    private final Cache<String, IUserSession> tokens = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.HOURS).build();
     //public methods
+    
+    private AccountManager() {}
+    
     @Override
-    public IUserSession login(String email, String password) {
+    public IUserSession login(String email, String password)
+    {
         IUserAccount usraccount = repository.selectAccount(email);
         if (PasswordHash.safeValidatePassword(password, usraccount.getPasswordHash()))
         {
-        	IUserSession session = new UserSession(usraccount.getID(), AccessLevel.NONE);
+        	IUserSession session = new UserSession(usraccount.getID(), usraccount.getAccessLevel());
+        	tokens.put(session.getToken(), session);
         	return session;
         }
         else
@@ -30,18 +40,20 @@ public class AccountManager implements IAccountManager {
         }
     }
     @Override
-    public IUserSession login(IUserAccount account) {
-        IUserAccount usraccount = repository.selectAccount(account.getEmail());
-        IUserSession session = new UserSession(usraccount.getID(), usraccount.getAccessLevel());
+    public IUserSession login(IUserAccount account)
+    {
+        IUserSession session = new UserSession(account.getID(), account.getAccessLevel());
+        tokens.put(session.getToken(), session);
         return session;
     }
     @Override
-    public IUserAccount create(String email, String password) {
+    public IUserAccount create(String email, String password)
+    {
     	try
     	{
     		String passwordHash = PasswordHash.createHash(password);
     		int id = repository.createAccount(email, passwordHash);
-    		IUserAccount usraccount = new UserAccount(id, email, passwordHash, AccessLevel.NONE);
+    		IUserAccount usraccount = new UserAccount(id, email, passwordHash, AccessLevel.LOGGED_IN);
     		return usraccount;
     	}
     	catch (Exception ex)
@@ -56,26 +68,47 @@ public class AccountManager implements IAccountManager {
 	 * @return {@link IUserSession} The session assigned to that session token, or <b>null</b> if no such session exists
 	 */
     @Override
-    public IUserSession getSession(String token) {
+    public IUserSession getSession(String token)
+    {
     	return tokens.getIfPresent(token);
     }
+    
+    public IUserSession getRequestSession(Request request)
+    {
+    	if (request.session(false) == null)
+		{
+			return null;
+		}
+		
+		String token = request.session(false).attribute("sessionToken");
+		
+		if (token != null)
+		{
+			return getSession(token);
+		}
+		
+		return null;
+    }
+    
     /**
 	 * Logs out of a {@link IUserSession} and destroys it
 	 * @param session The session being destroyed
 	 */
     @Override
-    public void logout(IUserSession session) {
+    public void logout(IUserSession session)
+    {
     	tokens.invalidate(session.getToken());
     }
+    
 	@Override
-	public boolean changeEmail(IUserAccount account, String newEmail, String password) {
-		IUserAccount usraccount = repository.selectAccount(account.getEmail());
+	public boolean changeEmail(IUserAccount account, String newEmail, String password)
+	{
 		try
     	{
-			if (PasswordHash.safeValidatePassword(password, usraccount.getPasswordHash()))
+			if (PasswordHash.safeValidatePassword(password, account.getPasswordHash()))
 			{
-				usraccount.setEmail(newEmail);
-				repository.updateAccountEmail(usraccount.getID(), newEmail);
+				account.setEmail(newEmail);
+				repository.updateAccountEmail(account.getID(), newEmail);
 				return true;
 			}
     	}
@@ -94,17 +127,18 @@ public class AccountManager implements IAccountManager {
 	 * @return boolean <b>true</b> if the password was successfully changed, <b>false</b> if the provided password was incorrect or the change otherwise failed
 	 */
 	@Override
-	public boolean changePassword(IUserAccount account, String newPassword, String password) {
-		IUserAccount usraccount = repository.selectAccount(account.getEmail());
-		
-		try {
-			if (PasswordHash.safeValidatePassword(password, usraccount.getPasswordHash()))
+	public boolean changePassword(IUserAccount account, String newPassword, String password)
+	{
+		try
+		{
+			if (PasswordHash.safeValidatePassword(password, account.getPasswordHash()))
 			{
-				usraccount.setPasswordHash(newPassword);
+				account.setPasswordHash(newPassword);
 				return true;
 			}
 		}
-		catch (Exception ex) {
+		catch (Exception ex)
+		{
 			ex.printStackTrace();
 			return false;
 		}

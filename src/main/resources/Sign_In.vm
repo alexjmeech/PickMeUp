@@ -1,8 +1,7 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-	<link rel = "stylesheet" type = "text/css" href = "pickmeup.css">
-
+	<link rel = "stylesheet" type = "text/css" href = "css/Sign_In.css">
 </head>
 
 <body>
@@ -12,13 +11,13 @@
 		 <div id ="border"></div> 
 
 		 <!-- This is the sign in form -->
-				<form>
+				<form action="/login" method="POST">
 					<p style="color:#d4d4dc; font-size: 20px;"> Sign In </p>
 					<input type="text" name="email" placeholder="Email"><br>
-					<input type="text" name="email" placeholder="Password"><br>
+					<input type="password" name="password" placeholder="Password"><br>
 					<input type="checkbox" name = "remember me"> : Remember me<br>
 					<input type="submit" name="login" value="Login"><br>
-					Don't have an account sign up   <a href="Sign_Up.vm"> here </a>
+					Don't have an account sign up   <a href="/signup"> here </a>
 										
 				</form>
 

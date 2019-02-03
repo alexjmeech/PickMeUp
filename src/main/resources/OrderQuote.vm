@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body {
+ 	border-radius: 5px;
+    background-color: #1d1e22;
+    padding: 20px;
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif; 
+    font-color: #d4d4dc;
+	color:#d4d4dc;
+	text-align:center;
+}
+
+#border {
+  border-style: ridge;
+  border-color:#feda6a; 
+}
+</style>
+</head>
+
+<body>
+
+		 <p align = 'center' style="font-size: 40px;">Your Order:  </p> 
+        
+        <div id = "border"></div><br>
+		
+		  			
+					Cost: $cost<br>
+					Minutes Until Pick Up: $pickupDelay<br>
+					Total Delivery Duration: $deliveryDuration<br>	
+				<button type="button" onclick="location.href='/deliverymonitor'">Yes</button>
+				 <button type="button" onclick="location.href='/cancelorder'">No</button>
+
+</body>
+</html>

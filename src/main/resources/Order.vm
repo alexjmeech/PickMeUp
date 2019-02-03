@@ -1,0 +1,27 @@
+<html id="page">
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "css/Order.css">
+</head>
+  <body>
+    <header id="header1">Order</header>
+    <div id="border1"></div>
+    <form id="Form1" action="/quoteorder" method="POST">
+      
+      <br>
+      <input id="input1" type="text" name="store_address" placeholder="Store Address">
+      
+      <input id="input2" type="text" name="store_phone" placeholder="Store Phone Number">
+      <br></br>
+    <input id="input4" type="text" name="order_description" placeholder="Order Description">
+    <input id="input4" type="text" name="order_notes" placeholder="Notes">
+    <br></br>
+    <input id="input5" type="text" name="order_id" placeholder="Order ID">
+  <input id="input6" type="text" name="store_name" placeholder="Store">
+  <br></br>
+<input type="checkbox" name="id_required">Pickup Requires ID</input>
+<input type="checkbox" name="signature_required">Dropoff Requires Signature</input>
+<br></br>
+      <button id="btn1" type="submit">Order</button>
+</form>
+</body>
+</html>
