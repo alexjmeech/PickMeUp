@@ -1,0 +1,42 @@
+=<!DOCTYPE html>
+<html>
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "pickmeup.css">
+
+</head>
+
+<body>
+
+
+		 <p align = 'center' style="font-size: 40px;"> Pick Me Up  </p>
+		 <div id ="border"></div> 
+
+		 <!-- This is the sign in form -->
+				<form>
+					<p style="color:#d4d4dc; font-size: 20px;"> Sign In </p>
+					<input type="text" name="email" placeholder="Email"><br>
+					<input type="text" name="email" placeholder="Password"><br>
+					<input type="checkbox" name = "remember me"> : Remember me<br>
+					<input type="submit" name="login" value="Login"><br>
+					Don't have an account sign up   <a href="Sign_Up.vm"> here </a>
+										
+				</form>
+
+<!--		This is the Sign up form
+				<form>
+						<p style="color:#d4d4dc; font-size: 20px;" >Create An Account </p>
+						Email:<br>
+						<input type = 'text' name = 'email'><br>
+						Password:<br>
+						<input type = 'text' name = 'pass'><br>
+						Confirm:<br>
+						<input type = 'text' name = 'pass'><br>
+						Phone:<br>
+						<input type = 'text' name = 'phone'><br>
+						<input type = 'submit' value = 'Sign Up'>
+				</form>
+
+-->
+
+</body>
+</html>
