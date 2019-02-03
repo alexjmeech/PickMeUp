@@ -15,7 +15,7 @@ public class CreateAccount extends BasicRoute
 	}
 
 	@Override
-	protected String handleRequest(Request request, Response response)
+	protected String handleRequest (Request request, Response response)
 	{
 		System.out.println("BODY: " + request.body());
 		response.type("text/html");
